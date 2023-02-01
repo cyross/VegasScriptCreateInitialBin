@@ -1,0 +1,2 @@
+# VegasScriptCreateInitialBin
+ボイロ動画用に、VEGASの初期ビンを作成する
