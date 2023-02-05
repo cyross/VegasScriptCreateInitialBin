@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace VegasScriptCreateInitialBin
 {
-    public partial class BinSetting : Form
+    public partial class SettingDialog : Form
     {
-        public BinSetting()
+        public SettingDialog()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace VegasScriptCreateInitialBin
 {
-    partial class BinSetting
+    partial class SettingDialog
     {
         /// <summary>
         /// Required designer variable.

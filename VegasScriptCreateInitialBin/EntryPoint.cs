@@ -13,7 +13,7 @@ namespace VegasScriptCreateInitialBin
             VegasHelper helper = VegasHelper.Instance(vegas);
 
 
-            BinSetting dialog = new BinSetting()
+            SettingDialog dialog = new SettingDialog()
             {
                 VoiroVoiceBinName = VegasScriptSettings.DefaultBinName["voiroVoice"],
                 VoiroJimakuBinName = VegasScriptSettings.DefaultBinName["voiroJimaku"],
