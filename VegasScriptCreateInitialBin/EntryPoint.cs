@@ -1,5 +1,6 @@
 ﻿using ScriptPortal.Vegas;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using VegasScriptHelper;
 
@@ -11,7 +12,6 @@ namespace VegasScriptCreateInitialBin
 
         public void FromVegas(Vegas vegas)
         {
-            VegasScriptSettings.Load();
             VegasHelper helper = VegasHelper.Instance(vegas);
 
             if(settingDialog == null) { settingDialog = new SettingDialog(); }
@@ -29,16 +29,35 @@ namespace VegasScriptCreateInitialBin
 
             if (settingDialog.ShowDialog() == DialogResult.Cancel) { return; }
 
-            CreateMediaBin(helper, settingDialog.VoiroVoiceBinName);
-            CreateMediaBin(helper, settingDialog.VoiroJimakuBinName);
-            CreateMediaBin(helper, settingDialog.JimakuBackgroundBinName);
-            CreateMediaBin(helper, settingDialog.TachieBinName);
-            CreateMediaBin(helper, settingDialog.DLAudioBinName);
-            CreateMediaBin(helper, settingDialog.CreatedAudioBinName);
-            CreateMediaBin(helper, settingDialog.DLMovieBinName);
-            CreateMediaBin(helper, settingDialog.CreatedMovieBinName);
-            CreateMediaBin(helper, settingDialog.DLImageBinName);
-            CreateMediaBin(helper, settingDialog.CreatedImageBinName);
+            try
+            {
+                using (new UndoBlock("ボイロ動画用ビンを作成"))
+                {
+                    CreateMediaBin(helper, settingDialog.VoiroVoiceBinName);
+                    CreateMediaBin(helper, settingDialog.VoiroJimakuBinName);
+                    CreateMediaBin(helper, settingDialog.JimakuBackgroundBinName);
+                    CreateMediaBin(helper, settingDialog.TachieBinName);
+                    CreateMediaBin(helper, settingDialog.DLAudioBinName);
+                    CreateMediaBin(helper, settingDialog.CreatedAudioBinName);
+                    CreateMediaBin(helper, settingDialog.DLMovieBinName);
+                    CreateMediaBin(helper, settingDialog.CreatedMovieBinName);
+                    CreateMediaBin(helper, settingDialog.DLImageBinName);
+                    CreateMediaBin(helper, settingDialog.CreatedImageBinName);
+                }
+            }
+            catch (Exception ex)
+            {
+                string errMessage = "[MESSAGE]" + ex.Message + "\n[SOURCE]" + ex.Source + "\n[STACKTRACE]" + ex.StackTrace;
+                Debug.WriteLine("---[Exception In Helper]---");
+                Debug.WriteLine(errMessage);
+                Debug.WriteLine("---------------------------");
+                MessageBox.Show(
+                    errMessage,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                throw ex;
+            }
         }
 
         private void CreateMediaBin(VegasHelper helper, string name)
